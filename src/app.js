@@ -1,46 +1,46 @@
-import express from "express";
-import setGeneraliddleware from "./middleware/generalMiddleware";
-import errorHandler from "./middleware/errorHandler";
-import verifyToken from "./middleware/verifyToken";
-import * as user from "./controllers/user";
-import * as trip from "./controllers/trip";
-import * as login from "./controllers/login";
-import path from "path";
+import express from 'express'
+import setGeneraliddleware from './middleware/generalMiddleware'
+import errorHandler from './middleware/errorHandler'
+import verifyToken from './middleware/verifyToken'
+import * as user from './controllers/user'
+import * as trip from './controllers/trip'
+import * as login from './controllers/login'
+import path from 'path'
 
-const server = express();
-setGeneraliddleware(server);
+const server = express()
+setGeneraliddleware(server)
 
-server.use(express.static(path.resolve(path.join(__dirname, "../public"))));
-server.get("/", (__, res) => res.sendFile("index.html"));
+server.use(express.static(path.resolve(path.join(__dirname, '../public'))))
+server.get('/', (__, res) => res.sendFile('index.html'))
 
 //login
-server.route("/login").get(login.login);
+server.route('/login').post(login.login)
 
 server
-  .route("/users")
+  .route('/users')
   .get(verifyToken, user.get)
-  .post(user.post);
+  .post(user.post)
 
 //Auth required beyond this line
-server.use(verifyToken);
+server.use(verifyToken)
 
 server
-  .route("/trips")
+  .route('/trips')
   .get(trip.get)
-  .post(trip.post);
+  .post(trip.post)
 
 server
-  .route("/users/:id")
+  .route('/users/:id')
   .get(user.get)
   .put(user.put)
-  .delete(user.deleteU);
+  .delete(user.deleteU)
 
 server
-  .route("/trips/:id")
+  .route('/trips/:id')
   .get(trip.get)
   .put(trip.put)
-  .delete(trip.deleteT);
+  .delete(trip.deleteT)
 
 // server.use(errorHandler);
 
-export default server;
+export default server
