@@ -20,7 +20,7 @@ export const login = async (req, res, next) => {
         .json({ msg: 'Please input a valid email and password.' })
     } else {
       res.status(200).json({
-        token: `${createToken(user[0])} and that's okay`,
+        token: `${createToken(user[0])}`,
         is_admin: user[0].is_admin
       })
     }
